@@ -52,6 +52,14 @@ export const StartMenu: React.FC<StartMenuProps> = ({
     if (!isReady || isStarting) return;
     setIsStarting(true);
 
+    // Start audio directly inside the user's click gesture. Waiting for the
+    // camera permission prompt first can make browsers reject autoplay.
+    const audioElement = new Audio(`${import.meta.env.BASE_URL}audio/background-music.mp3`);
+    audioElement.loop = true;
+    audioElement.preload = 'auto';
+    audioElement.volume = 0.5;
+    void audioElement.play().catch(() => undefined);
+
     try {
       const permissionStream = await navigator.mediaDevices?.getUserMedia({
         video: { width: 640, height: 360, facingMode: 'user' },
@@ -60,11 +68,6 @@ export const StartMenu: React.FC<StartMenuProps> = ({
     } catch (error) {
       console.warn('摄像头权限未授予，页面仍将继续打开。', error);
     }
-
-    const audioElement = new Audio('/audio/background-music.mp3');
-    audioElement.loop = true;
-    audioElement.volume = 0.5;
-    void audioElement.play().catch(() => undefined);
 
     onStart(DEFAULT_NAME, Number(DEFAULT_AGE), audioElement);
   };
