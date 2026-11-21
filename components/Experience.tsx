@@ -100,7 +100,7 @@ export const Experience: React.FC<ExperienceProps> = ({
       // Create a new audio element only if none was provided
       console.log('Creating new audio element since none was provided');
       // Use public directory path for audio file
-      audioRef.current = new Audio('/audio/background-music.mp3');
+      audioRef.current = new Audio(`${import.meta.env.BASE_URL}audio/background-music.mp3`);
       audioRef.current.loop = true;
       audioRef.current.volume = 0.5;
       
@@ -159,7 +159,7 @@ export const Experience: React.FC<ExperienceProps> = ({
       } else {
         // Fallback if no audio element exists yet
         console.log('Experience: Creating new audio element when mode changes to FORMED');
-        audioRef.current = new Audio('/audio/background-music.mp3');
+        audioRef.current = new Audio(`${import.meta.env.BASE_URL}audio/background-music.mp3`);
         audioRef.current.loop = true;
         audioRef.current.volume = 0.5;
         
